@@ -92,6 +92,38 @@
   .nav-btn.active { color: var(--accent); font-weight: 500; }
   .nav-btn.active::after { transform: scaleX(1); }
 
+  @media (max-width: 600px) {
+    .nav-inner {
+      flex-direction: column;
+      align-items: stretch;
+      padding: 0 1rem;
+      gap: 0;
+    }
+    .nav-logo {
+      padding: 12px 0 8px;
+      margin-right: 0;
+      font-size: 14px;
+    }
+    .nav-links {
+      display: flex;
+      justify-content: space-between;
+      border-top: 1px solid var(--border);
+    }
+    .nav-btn {
+      flex: 1;
+      text-align: center;
+      font-size: 11px;
+      padding: 10px 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .nav-btn::after {
+      left: 4px; right: 4px;
+    }
+    .wrap { padding: 0 1rem 4rem; }
+  }
+
   /* LAYOUT */
   .wrap { max-width: 780px; margin: 0 auto; padding: 0 2rem 6rem; }
 
@@ -408,8 +440,8 @@
   <!-- PAGE CONTEXTE -->
   <div class="page" id="page-contexte">
     <div class="header">
-      <p class="header-eyebrow">Comprendre la situation</p>
       <h1 class="header-title">Le<br><em>contexte</em></h1>
+      <p class="header-eyebrow">Comprendre la situation</p>
       <p class="header-sub">Ce que vivent les équipes au quotidien, chiffres à l'appui.</p>
     </div>
     <div class="kpi-row">
@@ -432,8 +464,8 @@
   <!-- PAGE HISTORIQUE -->
   <div class="page active" id="page-historique">
     <div class="header">
-      <p class="header-eyebrow">Registre des demandes</p>
       <h1 class="header-title">Cousteau<br><em>sous l'eau</em></h1>
+      <p class="header-eyebrow">Registre des demandes</p>
       <p class="header-sub">Un registre public et chronologique de toutes les demandes adressées par l'équipe éducative depuis 2020.</p>
     </div>
 
@@ -589,8 +621,8 @@
   <!-- PAGE PÉTITION -->
   <div class="page" id="page-petition">
     <div class="header">
-      <p class="header-eyebrow">Agir ensemble</p>
       <h1 class="header-title">La<br><em>pétition</em></h1>
+      <p class="header-eyebrow">Agir ensemble</p>
       <p class="header-sub">Rejoignez l'équipe éducative et soutenez leur demande de moyens humains adaptés.</p>
     </div>
     <p class="prose">Depuis 2020, les effectifs du collège ont augmenté de plus de 150 élèves. Les moyens de surveillance sont restés identiques. Plus de 30 demandes ont été formulées — la plupart sans réponse.</p>
