@@ -126,6 +126,40 @@
     line-height: 1.7; max-width: 480px;
   }
 
+  /* TODAY MARKER */
+  .today-marker {
+    position: relative;
+    display: flex; align-items: center;
+    padding: 8px 14px;
+    margin-bottom: 3px;
+  }
+  /* Point sur la ligne */
+  .today-marker::before {
+    content: '';
+    position: absolute; left: -26px;
+    top: 50%; transform: translateY(-50%);
+    width: 11px; height: 11px; border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+    animation: pulse-ring 2s ease-out infinite;
+    z-index: 1;
+  }
+
+  /* TODAY BADGE */
+  .today-badge {
+    font-size: 10px; font-weight: 600;
+    padding: 3px 10px; border-radius: 99px;
+    background: var(--accent); color: #fff;
+    letter-spacing: 0.06em; text-transform: uppercase;
+  }
+
+  /* Halo pulsant sur le point Aujourd'hui */
+  @keyframes pulse-ring {
+    0%   { box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px color-mix(in srgb, var(--accent) 40%, transparent); }
+    70%  { box-shadow: 0 0 0 2px var(--bg), 0 0 0 11px color-mix(in srgb, var(--accent) 0%, transparent); }
+    100% { box-shadow: 0 0 0 2px var(--bg), 0 0 0 11px color-mix(in srgb, var(--accent) 0%, transparent); }
+  }
+
   /* CHIPS */
   .chips { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 2.5rem; }
   .chip {
@@ -143,10 +177,19 @@
 
   /* TIMELINE */
   .timeline { position: relative; padding-left: 32px; }
+
+  /* Ligne de fond avec fade-out en haut et en bas */
   .timeline::before {
     content: '';
-    position: absolute; left: 7px; top: 10px; bottom: 20px;
-    width: 1px; background: var(--border-mid);
+    position: absolute; left: 7px; top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      var(--border-mid) 6%,
+      var(--border-mid) 94%,
+      transparent 100%
+    );
   }
 
   .year-block { margin-bottom: 0; }
@@ -403,6 +446,13 @@
 
     <div class="timeline" id="tl">
 
+      <div class="year-block" data-year="2026">
+        <div class="year-marker"><span class="year-text">2026</span></div>
+        <div class="today-marker">
+          <span class="today-badge">Aujourd'hui</span>
+        </div>
+      </div>
+
       <div class="year-block" data-year="2025">
         <div class="year-marker"><span class="year-text">2025</span></div>
 
@@ -623,6 +673,15 @@
   function sign() {
     count++;
     document.getElementById('sc').innerHTML = '<strong>' + count + ' personnes</strong> ont déjà signé';
+  }
+
+  window.addEventListener('scroll', updateTimelineProgress, { passive: true });
+  window.addEventListener('load', updateTimelineProgress);
+  // Also update when switching to the historique page
+  const _origShowPage = showPage;
+  function showPage(id, btn) {
+    _origShowPage(id, btn);
+    setTimeout(updateTimelineProgress, 350);
   }
 </script>
 </body>
