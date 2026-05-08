@@ -26,6 +26,71 @@
     --font-display: 'Syne', sans-serif;
   }
 
+  :root.light {
+    --bg: #f7f7f5;
+    --bg-secondary: #ececea;
+    --bg-tertiary: #e2e2e0;
+    --text: #1a1a1a;
+    --text-secondary: #555551;
+    --text-tertiary: #999994;
+    --border: rgba(0,0,0,0.08);
+    --border-mid: rgba(0,0,0,0.14);
+    --accent: #2563EB;
+    --accent-dark: #1d4ed8;
+  }
+
+  /* THEME TOGGLE */
+  .theme-toggle {
+    margin-left: auto;
+    display: flex; align-items: center;
+    flex-shrink: 0;
+  }
+  .toggle-btn {
+    display: flex; align-items: center; gap: 7px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-mid);
+    border-radius: 99px;
+    padding: 5px 12px 5px 8px;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .toggle-btn:hover { background: var(--bg-tertiary); }
+  .toggle-track {
+    width: 30px; height: 16px;
+    background: var(--bg-tertiary);
+    border-radius: 99px;
+    position: relative;
+    border: 1px solid var(--border-mid);
+    transition: background 0.25s;
+    flex-shrink: 0;
+  }
+  :root.light .toggle-track { background: var(--accent); border-color: transparent; }
+  .toggle-thumb {
+    position: absolute;
+    top: 2px; left: 2px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--text-tertiary);
+    transition: transform 0.25s cubic-bezier(.4,0,.2,1), background 0.25s;
+  }
+  :root.light .toggle-thumb { transform: translateX(14px); background: #fff; }
+  .toggle-icon {
+    font-size: 13px; line-height: 1;
+    user-select: none;
+  }
+  .toggle-label {
+    font-size: 11px; font-weight: 500;
+    color: var(--text-tertiary);
+    white-space: nowrap;
+    transition: color 0.2s;
+  }
+
+  @media (max-width: 600px) {
+    .toggle-label { display: none; }
+    .toggle-btn { padding: 5px 8px; gap: 5px; }
+  }
+
   * { box-sizing: border-box; margin: 0; padding: 0; }
   *:focus { outline: none; }
   button { -webkit-appearance: none; appearance: none; font-family: var(--font-sans); }
@@ -289,6 +354,11 @@
   .badge-reunion { background: rgba(37,99,235,0.22); color: #93C5FD; }
   .badge-petition{ background: rgba(234,179,8,0.15); color: #FDE047; }
 
+  :root.light .badge-alerte  { background: rgba(239,68,68,0.12); color: #dc2626; }
+  :root.light .badge-courrier{ background: rgba(34,197,94,0.15); color: #16a34a; }
+  :root.light .badge-reunion { background: rgba(37,99,235,0.14); color: #2563EB; }
+  :root.light .badge-petition{ background: rgba(202,138,4,0.14); color: #b45309; }
+
   .entry-title {
     font-family: var(--font-display); font-size: 0.9rem; font-weight: 600;
     color: var(--text); flex: 1; line-height: 1.3;
@@ -407,6 +477,24 @@
   .sign-btn:active { transform: translateY(0); }
   .sign-count { font-size: 12px; color: var(--text-tertiary); text-align: center; margin-top: 12px; }
   .sign-count strong { color: var(--accent); }
+  /* CHART */
+  .chart-block {
+    margin: 2rem 0 0;
+    background: var(--bg-secondary);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem 1.5rem 1.25rem;
+  }
+  .chart-title {
+    font-family: var(--font-display); font-size: 0.95rem; font-weight: 700;
+    color: var(--text); margin-bottom: 1.25rem;
+  }
+  .chart-wrap { width: 100%; }
+  .chart-wrap svg { width: 100%; display: block; }
+  .chart-dot-eleves, .chart-dot-aed {
+    display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 3px; vertical-align: middle;
+  }
+  .chart-dot-eleves { background: #2563EB; }
+  .chart-dot-aed    { background: #F59E0B; }
 </style>
 </head>
 <body>
@@ -418,6 +506,13 @@
       <button class="nav-btn" onclick="showPage('contexte', this)">Contexte</button>
       <button class="nav-btn active" onclick="showPage('historique', this)">Historique des demandes</button>
       <button class="nav-btn" onclick="showPage('petition', this)">Pétition</button>
+    </div>
+    <div class="theme-toggle">
+      <button class="toggle-btn" onclick="toggleTheme()" aria-label="Basculer le thème" title="Mode clair / sombre">
+        <span class="toggle-icon" id="toggle-icon">🌙</span>
+        <div class="toggle-track"><div class="toggle-thumb"></div></div>
+        <span class="toggle-label" id="toggle-label">Mode sombre</span>
+      </button>
     </div>
   </div>
 </nav>
@@ -443,6 +538,101 @@
       <span class="callout-icon">⚠</span>
       <p class="callout-text">Un seul AED peut se retrouver à surveiller plus de <strong>280 élèves</strong> en cour de récréation. Les textes officiels recommandent un ratio maximum de <strong>1 pour 150</strong>. Ce n'est pas une question de bonne volonté : c'est une question de sécurité.</p>
     </div>
+
+    <!-- GRAPHIQUE EFFECTIFS -->
+    <div class="chart-block">
+      <p class="chart-title">Évolution des effectifs (2019–2026)</p>
+      <div class="chart-wrap">
+        <svg viewBox="0 0 680 240" xmlns="http://www.w3.org/2000/svg" id="effectifs-svg" style="width:100%;display:block;overflow:visible">
+          <!-- Données : élèves 520→558→591→622→648→670→686→672 ; AED constant 6 -->
+          <!-- Axes : Y élèves [480–720], Y AED [0–12] ; X : 8 années -->
+          <!-- Zone intérieure : x=52..620, y=16..204, W=568, H=188 -->
+
+          <!-- Lignes de grille horizontales (ticks élèves : 520,560,600,640,680,720) -->
+          <!-- y = 204 - ((v-480)/240)*188 -->
+          <!-- 520→188.7  560→157.3  600→126  640→94.7  680→63.3  720→32 (≈16 top) -->
+          <line x1="52" x2="620" y1="189" y2="189" stroke="var(--border)" stroke-width="1"/>
+          <line x1="52" x2="620" y1="157" y2="157" stroke="var(--border)" stroke-width="1"/>
+          <line x1="52" x2="620" y1="126" y2="126" stroke="var(--border)" stroke-width="1"/>
+          <line x1="52" x2="620" y1="95"  y2="95"  stroke="var(--border)" stroke-width="1"/>
+          <line x1="52" x2="620" y1="63"  y2="63"  stroke="var(--border)" stroke-width="1"/>
+          <line x1="52" x2="620" y1="32"  y2="32"  stroke="var(--border)" stroke-width="1"/>
+
+          <!-- Axe X -->
+          <line x1="52" x2="620" y1="204" y2="204" stroke="var(--border)" stroke-width="1"/>
+
+          <!-- X positions (0..7) → 52 + i*(568/7) = 52, 133, 214, 295, 376, 457, 539, 620 -->
+          <!-- Y élèves : 204 - ((v-480)/240)*188 -->
+          <!-- 520→188.7  558→158.9  591→133.1  622→108.9  648→88.5  670→71.3  686→59.1  672→69.9 -->
+
+          <!-- Zone remplie élèves -->
+          <path d="M52,189 L133,159 L214,133 L295,109 L376,89 L457,71 L539,59 L620,70 L620,204 L52,204 Z"
+                fill="rgba(37,99,235,0.13)"/>
+
+          <!-- Courbe élèves -->
+          <polyline points="52,189 133,159 214,133 295,109 376,89 457,71 539,59 620,70"
+                    fill="none" stroke="#2563EB" stroke-width="2.5"
+                    stroke-linejoin="round" stroke-linecap="round"/>
+
+          <!-- AED constant à 6 → y = 204 - (6/12)*188 = 204-94 = 110 -->
+          <line x1="52" x2="620" y1="110" y2="110"
+                stroke="#F59E0B" stroke-width="2" stroke-dasharray="5,4"/>
+
+          <!-- Points élèves -->
+          <circle cx="52"  cy="189" r="4" fill="#2563EB" stroke="var(--bg-secondary)" stroke-width="2"/>
+          <circle cx="133" cy="159" r="4" fill="#2563EB" stroke="var(--bg-secondary)" stroke-width="2"/>
+          <circle cx="214" cy="133" r="4" fill="#2563EB" stroke="var(--bg-secondary)" stroke-width="2"/>
+          <circle cx="295" cy="109" r="4" fill="#2563EB" stroke="var(--bg-secondary)" stroke-width="2"/>
+          <circle cx="376" cy="89"  r="4" fill="#2563EB" stroke="var(--bg-secondary)" stroke-width="2"/>
+          <circle cx="457" cy="71"  r="4" fill="#2563EB" stroke="var(--bg-secondary)" stroke-width="2"/>
+          <circle cx="539" cy="59"  r="4" fill="#2563EB" stroke="var(--bg-secondary)" stroke-width="2"/>
+          <circle cx="620" cy="70"  r="4" fill="#2563EB" stroke="var(--bg-secondary)" stroke-width="2"/>
+
+          <!-- Points AED -->
+          <circle cx="52"  cy="110" r="3.5" fill="#F59E0B" stroke="var(--bg-secondary)" stroke-width="2"/>
+          <circle cx="620" cy="110" r="3.5" fill="#F59E0B" stroke="var(--bg-secondary)" stroke-width="2"/>
+
+          <!-- Labels Y gauche (élèves) -->
+          <text x="46" y="193" text-anchor="end" font-family="Inter,sans-serif" font-size="10" fill="var(--text-tertiary)">520</text>
+          <text x="46" y="161" text-anchor="end" font-family="Inter,sans-serif" font-size="10" fill="var(--text-tertiary)">560</text>
+          <text x="46" y="130" text-anchor="end" font-family="Inter,sans-serif" font-size="10" fill="var(--text-tertiary)">600</text>
+          <text x="46" y="99"  text-anchor="end" font-family="Inter,sans-serif" font-size="10" fill="var(--text-tertiary)">640</text>
+          <text x="46" y="67"  text-anchor="end" font-family="Inter,sans-serif" font-size="10" fill="var(--text-tertiary)">680</text>
+          <text x="46" y="36"  text-anchor="end" font-family="Inter,sans-serif" font-size="10" fill="var(--text-tertiary)">720</text>
+
+          <!-- Labels Y droite (AED) -->
+          <text x="626" y="114" text-anchor="start" font-family="Inter,sans-serif" font-size="10" fill="#F59E0B">6 AED</text>
+
+          <!-- Labels X -->
+          <text x="52"  y="222" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="var(--text-tertiary)">2019</text>
+          <text x="133" y="222" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="var(--text-tertiary)">2020</text>
+          <text x="214" y="222" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="var(--text-tertiary)">2021</text>
+          <text x="295" y="222" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="var(--text-tertiary)">2022</text>
+          <text x="376" y="222" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="var(--text-tertiary)">2023</text>
+          <text x="457" y="222" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="var(--text-tertiary)">2024</text>
+          <text x="539" y="222" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="var(--text-tertiary)">2025</text>
+          <text x="620" y="222" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="var(--text-tertiary)">2026</text>
+
+          <!-- Valeurs au-dessus des points élèves -->
+          <text x="52"  y="183" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2563EB" font-weight="600">520</text>
+          <text x="133" y="153" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2563EB" font-weight="600">558</text>
+          <text x="214" y="127" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2563EB" font-weight="600">591</text>
+          <text x="295" y="103" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2563EB" font-weight="600">622</text>
+          <text x="376" y="83"  text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2563EB" font-weight="600">648</text>
+          <text x="457" y="65"  text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2563EB" font-weight="600">670</text>
+          <text x="539" y="53"  text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2563EB" font-weight="600">686</text>
+          <text x="620" y="64"  text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2563EB" font-weight="600">672</text>
+
+          <!-- Légende -->
+          <circle cx="490" cy="236" r="4" fill="#2563EB"/>
+          <text x="498" y="240" font-family="Inter,sans-serif" font-size="10" fill="var(--text-tertiary)">Élèves</text>
+          <line x1="548" y1="236" x2="564" y2="236" stroke="#F59E0B" stroke-width="2" stroke-dasharray="4,3"/>
+          <circle cx="556" cy="236" r="3" fill="#F59E0B"/>
+          <text x="568" y="240" font-family="Inter,sans-serif" font-size="10" fill="var(--text-tertiary)">Postes AED</text>
+        </svg>
+      </div>
+    </div>
+
     <hr class="divider">
     <p class="section-title">Pourquoi ce site ?</p>
     <p class="prose">Ce blog a été créé pour garder une trace de chaque demande formulée, chaque signalement envoyé, chaque réunion où le sujet a été évoqué — et de l'absence de réponse qui a trop souvent suivi.</p>
@@ -639,6 +829,27 @@
 </div><!-- /wrap -->
 
 <script>
+  function toggleTheme() {
+    const isLight = document.documentElement.classList.toggle('light');
+    document.getElementById('toggle-icon').textContent = isLight ? '☀️' : '🌙';
+    document.getElementById('toggle-label').textContent = isLight ? 'Mode clair' : 'Mode sombre';
+    try { localStorage.setItem('theme', isLight ? 'light' : 'dark'); } catch(e){}
+  }
+  // Restore saved preference
+  (function() {
+    try {
+      if (localStorage.getItem('theme') === 'light') {
+        document.documentElement.classList.add('light');
+        document.addEventListener('DOMContentLoaded', function() {
+          var icon = document.getElementById('toggle-icon');
+          var label = document.getElementById('toggle-label');
+          if (icon) icon.textContent = '☀️';
+          if (label) label.textContent = 'Mode clair';
+        });
+      }
+    } catch(e){}
+  })();
+
   function showPage(id, btn) {
     const current = document.querySelector('.page.active');
     const next = document.getElementById('page-' + id);
@@ -696,7 +907,6 @@
 
   window.addEventListener('scroll', updateTimelineProgress, { passive: true });
   window.addEventListener('load', updateTimelineProgress);
-  // Also update when switching to the historique page
 
 </script>
 </body>
