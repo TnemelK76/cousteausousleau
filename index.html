@@ -151,6 +151,11 @@
       padding: 0 1rem;
       gap: 0;
     }
+    .nav-logo-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
     .nav-logo {
       padding: 12px 0 8px;
       margin-right: 0;
@@ -173,10 +178,36 @@
     .nav-btn::after {
       left: 4px; right: 4px;
     }
+    /* Sur mobile : toggle dans la ligne logo, pas après les liens */
+    .theme-toggle {
+      margin-left: 0;
+      order: 0;
+    }
+    .toggle-label { display: none; }
+    .toggle-btn { padding: 5px 8px; gap: 5px; }
+    /* Cacher le toggle de sa position desktop (après nav-links) */
+    .nav-links + .theme-toggle {
+      display: none;
+    }
     .wrap { padding: 0 1rem 4rem; }
   }
 
-  /* LAYOUT */
+  /* Toggle desktop (après les liens) / mobile (dans la ligne logo) */
+  .nav-logo-row {
+    display: contents; /* sur desktop, le logo reste dans le flux flex normal */
+  }
+  .theme-toggle-mobile { display: none; }
+  .theme-toggle-desktop { display: flex; }
+
+  @media (max-width: 600px) {
+    .nav-logo-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .theme-toggle-mobile { display: flex; margin-left: 0; }
+    .theme-toggle-desktop { display: none; }
+  }
   .wrap { max-width: 780px; margin: 0 auto; padding: 0 2rem 6rem; }
 
   /* PAGES */
@@ -501,13 +532,21 @@
 
 <nav class="nav">
   <div class="nav-inner">
-    <a class="nav-logo" href="#">Cousteau <br><span>sous l'eau</span></a>
+    <div class="nav-logo-row">
+      <a class="nav-logo" href="#">Cousteau <br><span>sous l'eau</span></a>
+      <div class="theme-toggle theme-toggle-mobile">
+        <button class="toggle-btn" onclick="toggleTheme()" aria-label="Basculer le thème" title="Mode clair / sombre">
+          <span class="toggle-icon" id="toggle-icon-mobile">🌙</span>
+          <div class="toggle-track"><div class="toggle-thumb"></div></div>
+        </button>
+      </div>
+    </div>
     <div class="nav-links">
       <button class="nav-btn" onclick="showPage('contexte', this)">Contexte</button>
       <button class="nav-btn active" onclick="showPage('historique', this)">Historique des demandes</button>
       <button class="nav-btn" onclick="showPage('petition', this)">Pétition</button>
     </div>
-    <div class="theme-toggle">
+    <div class="theme-toggle theme-toggle-desktop">
       <button class="toggle-btn" onclick="toggleTheme()" aria-label="Basculer le thème" title="Mode clair / sombre">
         <span class="toggle-icon" id="toggle-icon">🌙</span>
         <div class="toggle-track"><div class="toggle-thumb"></div></div>
@@ -829,10 +868,17 @@
 </div><!-- /wrap -->
 
 <script>
+  function syncToggleUI(isLight) {
+    var icon = document.getElementById('toggle-icon');
+    var iconM = document.getElementById('toggle-icon-mobile');
+    var label = document.getElementById('toggle-label');
+    if (icon)  icon.textContent  = isLight ? '☀️' : '🌙';
+    if (iconM) iconM.textContent = isLight ? '☀️' : '🌙';
+    if (label) label.textContent = isLight ? 'Mode clair' : 'Mode sombre';
+  }
   function toggleTheme() {
     const isLight = document.documentElement.classList.toggle('light');
-    document.getElementById('toggle-icon').textContent = isLight ? '☀️' : '🌙';
-    document.getElementById('toggle-label').textContent = isLight ? 'Mode clair' : 'Mode sombre';
+    syncToggleUI(isLight);
     try { localStorage.setItem('theme', isLight ? 'light' : 'dark'); } catch(e){}
   }
   // Restore saved preference
@@ -840,12 +886,7 @@
     try {
       if (localStorage.getItem('theme') === 'light') {
         document.documentElement.classList.add('light');
-        document.addEventListener('DOMContentLoaded', function() {
-          var icon = document.getElementById('toggle-icon');
-          var label = document.getElementById('toggle-label');
-          if (icon) icon.textContent = '☀️';
-          if (label) label.textContent = 'Mode clair';
-        });
+        document.addEventListener('DOMContentLoaded', function() { syncToggleUI(true); });
       }
     } catch(e){}
   })();
