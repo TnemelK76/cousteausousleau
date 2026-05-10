@@ -649,49 +649,60 @@
 
     <!-- GRAPHIQUE EFFECTIFS -->
     <div class="chart-block">
-      <p class="chart-title">Évolution des effectifs (2019–2025)</p>
+      <p class="chart-title">Évolution des effectifs (2019–2026)</p>
       <div class="chart-wrap">
-        <svg viewBox="0 0 680 240" xmlns="http://www.w3.org/2000/svg" id="effectifs-svg" style="width:100%;display:block;overflow:visible">
-          <!-- Données : 2019=365, 2020=398, 2021=393, 2022=384, 2023=445, 2024=478, 2025=505 -->
-          <!-- Zone intérieure : x=52..620, y=16..204, W=568, H=188 -->
-          <!-- Échelle Y : 320–520, formule : y = 204 - ((v-320)/200)*188 -->
-          <!-- X positions (7 pts, 6 intervalles) : 52, 146, 240, 335, 429, 523, 620 -->
-          <!-- Y : 365→162, 398→131, 393→135, 384→144, 445→87, 478→56, 505→30 -->
+        <svg viewBox="0 0 770 240" xmlns="http://www.w3.org/2000/svg" id="effectifs-svg" style="width:100%;display:block;overflow:visible">
+          <!-- Données : 2019=365, 2020=398, 2021=393, 2022=384, 2023=445, 2024=478, 2025=505, 2026=532 (projection) -->
+          <!-- Zone intérieure : x=52..714, y=16..204, W=662, H=188 -->
+          <!-- Échelle Y : 320–540, formule : y = 204 - ((v-320)/220)*188 -->
+          <!-- X positions (8 pts, 7 intervalles) : 52, 146, 240, 335, 429, 523, 620, 714 -->
+          <!-- Y recalc sur 320-540 : 365→166, 398→137, 393→141, 384→149, 445→92, 478→61, 505→38, 532→15 -->
 
-          <!-- Lignes de grille horizontales : 320, 360, 400, 440, 480, 520 -->
-          <!-- y : 320→204, 360→166, 400→129, 440→91, 480→54, 520→16 -->
-          <line x1="52" x2="620" y1="204" y2="204" stroke="var(--border)" stroke-width="1"/>
-          <line x1="52" x2="620" y1="166" y2="166" stroke="var(--border)" stroke-width="1"/>
-          <line x1="52" x2="620" y1="129" y2="129" stroke="var(--border)" stroke-width="1"/>
-          <line x1="52" x2="620" y1="91"  y2="91"  stroke="var(--border)" stroke-width="1"/>
-          <line x1="52" x2="620" y1="54"  y2="54"  stroke="var(--border)" stroke-width="1"/>
-          <line x1="52" x2="620" y1="16"  y2="16"  stroke="var(--border)" stroke-width="1"/>
+          <!-- Lignes de grille horizontales -->
+          <line x1="52" x2="714" y1="204" y2="204" stroke="var(--border)" stroke-width="1"/>
+          <line x1="52" x2="714" y1="170" y2="170" stroke="var(--border)" stroke-width="1"/>
+          <line x1="52" x2="714" y1="136" y2="136" stroke="var(--border)" stroke-width="1"/>
+          <line x1="52" x2="714" y1="102" y2="102" stroke="var(--border)" stroke-width="1"/>
+          <line x1="52" x2="714" y1="68"  y2="68"  stroke="var(--border)" stroke-width="1"/>
+          <line x1="52" x2="714" y1="34"  y2="34"  stroke="var(--border)" stroke-width="1"/>
 
-          <!-- Zone remplie élèves -->
-          <path d="M52,162 L146,131 L240,135 L335,144 L429,87 L523,56 L620,30 L620,204 L52,204 Z"
+          <!-- Zone remplie élèves (données réelles seulement) -->
+          <path d="M52,166 L146,137 L240,141 L335,149 L429,92 L523,61 L620,38 L620,204 L52,204 Z"
                 fill="rgba(37,99,235,0.13)"/>
 
-          <!-- Courbe élèves -->
-          <polyline points="52,162 146,131 240,135 335,144 429,87 523,56 620,30"
+          <!-- Zone remplie projection (2025→2026), plus transparente -->
+          <path d="M620,38 L714,15 L714,204 L620,204 Z"
+                fill="rgba(37,99,235,0.05)"/>
+
+          <!-- Courbe élèves (données réelles) -->
+          <polyline points="52,166 146,137 240,141 335,149 429,92 523,61 620,38"
                     fill="none" stroke="#2563EB" stroke-width="2.5"
                     stroke-linejoin="round" stroke-linecap="round"/>
 
-          <!-- Points élèves -->
-          <circle cx="52"  cy="162" r="4" fill="#2563EB" stroke="var(--bg-secondary)" stroke-width="2"/>
-          <circle cx="146" cy="131" r="4" fill="#2563EB" stroke="var(--bg-secondary)" stroke-width="2"/>
-          <circle cx="240" cy="135" r="4" fill="#2563EB" stroke="var(--bg-secondary)" stroke-width="2"/>
-          <circle cx="335" cy="144" r="4" fill="#2563EB" stroke="var(--bg-secondary)" stroke-width="2"/>
-          <circle cx="429" cy="87"  r="4" fill="#2563EB" stroke="var(--bg-secondary)" stroke-width="2"/>
-          <circle cx="523" cy="56"  r="4" fill="#2563EB" stroke="var(--bg-secondary)" stroke-width="2"/>
-          <circle cx="620" cy="30"  r="4" fill="#2563EB" stroke="var(--bg-secondary)" stroke-width="2"/>
+          <!-- Liaison pointillée 2025→2026 (projection) -->
+          <line x1="620" y1="38" x2="714" y2="15"
+                stroke="#2563EB" stroke-width="2.5" stroke-dasharray="6,4"
+                stroke-linecap="round"/>
+
+          <!-- Points élèves (réels) -->
+          <circle cx="52"  cy="166" r="4" fill="#2563EB" stroke="var(--bg-secondary)" stroke-width="2"/>
+          <circle cx="146" cy="137" r="4" fill="#2563EB" stroke="var(--bg-secondary)" stroke-width="2"/>
+          <circle cx="240" cy="141" r="4" fill="#2563EB" stroke="var(--bg-secondary)" stroke-width="2"/>
+          <circle cx="335" cy="149" r="4" fill="#2563EB" stroke="var(--bg-secondary)" stroke-width="2"/>
+          <circle cx="429" cy="92"  r="4" fill="#2563EB" stroke="var(--bg-secondary)" stroke-width="2"/>
+          <circle cx="523" cy="61"  r="4" fill="#2563EB" stroke="var(--bg-secondary)" stroke-width="2"/>
+          <circle cx="620" cy="38"  r="4" fill="#2563EB" stroke="var(--bg-secondary)" stroke-width="2"/>
+
+          <!-- Point projection 2026 (cercle vide / contour pointillé) -->
+          <circle cx="714" cy="15" r="4" fill="var(--bg)" stroke="#2563EB" stroke-width="2" stroke-dasharray="3,2"/>
 
           <!-- Labels Y gauche -->
           <text x="46" y="208" text-anchor="end" font-family="Inter,sans-serif" font-size="10" fill="var(--text-tertiary)">320</text>
-          <text x="46" y="170" text-anchor="end" font-family="Inter,sans-serif" font-size="10" fill="var(--text-tertiary)">360</text>
-          <text x="46" y="133" text-anchor="end" font-family="Inter,sans-serif" font-size="10" fill="var(--text-tertiary)">400</text>
-          <text x="46" y="95"  text-anchor="end" font-family="Inter,sans-serif" font-size="10" fill="var(--text-tertiary)">440</text>
-          <text x="46" y="58"  text-anchor="end" font-family="Inter,sans-serif" font-size="10" fill="var(--text-tertiary)">480</text>
-          <text x="46" y="20"  text-anchor="end" font-family="Inter,sans-serif" font-size="10" fill="var(--text-tertiary)">520</text>
+          <text x="46" y="174" text-anchor="end" font-family="Inter,sans-serif" font-size="10" fill="var(--text-tertiary)">360</text>
+          <text x="46" y="140" text-anchor="end" font-family="Inter,sans-serif" font-size="10" fill="var(--text-tertiary)">400</text>
+          <text x="46" y="106" text-anchor="end" font-family="Inter,sans-serif" font-size="10" fill="var(--text-tertiary)">440</text>
+          <text x="46" y="72"  text-anchor="end" font-family="Inter,sans-serif" font-size="10" fill="var(--text-tertiary)">480</text>
+          <text x="46" y="38"  text-anchor="end" font-family="Inter,sans-serif" font-size="10" fill="var(--text-tertiary)">520</text>
 
           <!-- Labels X -->
           <text x="52"  y="222" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="var(--text-tertiary)">2019</text>
@@ -701,19 +712,29 @@
           <text x="429" y="222" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="var(--text-tertiary)">2023</text>
           <text x="523" y="222" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="var(--text-tertiary)">2024</text>
           <text x="620" y="222" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="var(--text-tertiary)">2025</text>
+          <text x="714" y="222" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#2563EB" font-style="italic">2026</text>
 
-          <!-- Valeurs au-dessus des points -->
-          <text x="52"  y="156" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2563EB" font-weight="600">365</text>
-          <text x="146" y="125" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2563EB" font-weight="600">398</text>
-          <text x="240" y="129" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2563EB" font-weight="600">393</text>
-          <text x="335" y="138" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2563EB" font-weight="600">384</text>
-          <text x="429" y="81"  text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2563EB" font-weight="600">445</text>
-          <text x="523" y="50"  text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2563EB" font-weight="600">478</text>
-          <text x="620" y="24"  text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2563EB" font-weight="600">505</text>
+          <!-- Valeurs au-dessus des points (réels) -->
+          <text x="52"  y="160" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2563EB" font-weight="600">365</text>
+          <text x="146" y="131" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2563EB" font-weight="600">398</text>
+          <text x="240" y="135" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2563EB" font-weight="600">393</text>
+          <text x="335" y="143" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2563EB" font-weight="600">384</text>
+          <text x="429" y="86"  text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2563EB" font-weight="600">445</text>
+          <text x="523" y="55"  text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2563EB" font-weight="600">478</text>
+          <text x="620" y="32"  text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2563EB" font-weight="600">505</text>
+
+          <!-- Valeur projection 2026 -->
+          <text x="714" y="9" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2563EB" font-weight="600" font-style="italic">532</text>
+
+          <!-- Étiquette projection -->
+          <text x="667" y="236" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="var(--text-tertiary)" font-style="italic">projection</text>
 
           <!-- Légende -->
-          <circle cx="490" cy="236" r="4" fill="#2563EB"/>
-          <text x="498" y="240" font-family="Inter,sans-serif" font-size="10" fill="var(--text-tertiary)">Élèves</text>
+          <circle cx="460" cy="236" r="4" fill="#2563EB"/>
+          <text x="468" y="240" font-family="Inter,sans-serif" font-size="10" fill="var(--text-tertiary)">Élèves (réel)</text>
+          <line x1="540" y1="236" x2="556" y2="236" stroke="#2563EB" stroke-width="2" stroke-dasharray="4,3"/>
+          <circle cx="566" cy="236" r="3" fill="var(--bg)" stroke="#2563EB" stroke-width="1.5"/>
+          <text x="572" y="240" font-family="Inter,sans-serif" font-size="10" fill="var(--text-tertiary)">Projection</text>
         </svg>
       </div>
     </div>
@@ -765,6 +786,9 @@
             <li>Réévaluation du secteur de l'infirmière</li>
             <li>Création d'un second poste de CPE</li>
           </ul>
+          <p style="font-family:var(--font-display);font-size:0.88rem;font-weight:700;color:#F59E0B;margin-bottom:12px;display:flex;align-items:baseline;gap:7px;">
+            <span style="font-size:13px;">⚡</span>Nous serons en grève le 22 mai 2026 pour appuyer nos demandes
+          </p>
           <button class="petition-card-link" onclick="showPage('petition', document.querySelectorAll('.nav-btn')[2])">
             Plus d'informations sur la pétition
             <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
