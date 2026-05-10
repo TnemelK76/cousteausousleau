@@ -743,6 +743,94 @@
     <p class="prose">Parallèlement à cette augmentation, on constate une <em>chute de l’indice de position sociale (IPS)</em>. De 78,2 en 2022, on passe à 74,8 en 2025. Ces informations sont à comparer avec les données académiques et départementales qui ne subissent pas une grande variation sur la même période : 103 à 104.</p>
     <p class="prose">Les différents indicateurs soulignent que le collège Cousteau entre dans la <em>caste fermée des établissements REP +</em>, c’est-à-dire l’éducation prioritaire renforcée. Cependant, la révision de la carte de l’éducation prioritaire n’est pas à l’ordre du jour au ministère.</p>
     
+    <!-- GRAPHIQUE IPS -->
+    <div class="chart-block">
+      <p class="chart-title">Indice de Position Sociale (IPS) — Cousteau vs moyenne académique Normandie</p>
+      <div class="chart-wrap">
+        <svg viewBox="0 0 680 250" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;overflow:visible">
+          <!--
+            Échelle Y unique : 65–110, H=188px, y=204 (bas=65) → y=16 (haut=110)
+            Formule : y = 204 - ((v - 65) / 45) * 188
+            IPS Cousteau   : 78,2→146 | 77,1→151 | 75,9→156 | 74,8→161
+            Moy. académique: 103→71   | 103,5→69 | 103,8→68 | 104→66
+            X positions (4 pts) : 120, 307, 494, 620
+          -->
+
+          <!-- Lignes de grille -->
+          <line x1="52" x2="628" y1="204" y2="204" stroke="var(--border)" stroke-width="1"/>
+          <line x1="52" x2="628" y1="166" y2="166" stroke="var(--border)" stroke-width="1"/>
+          <line x1="52" x2="628" y1="128" y2="128" stroke="var(--border)" stroke-width="1"/>
+          <line x1="52" x2="628" y1="91"  y2="91"  stroke="var(--border)" stroke-width="1"/>
+          <line x1="52" x2="628" y1="53"  y2="53"  stroke="var(--border)" stroke-width="1"/>
+          <line x1="52" x2="628" y1="16"  y2="16"  stroke="var(--border)" stroke-width="1"/>
+
+          <!-- Zone remplie IPS Cousteau -->
+          <path d="M120,146 L307,151 L494,156 L620,161 L620,204 L120,204 Z"
+                fill="rgba(239,68,68,0.10)"/>
+
+          <!-- Courbe IPS Cousteau -->
+          <polyline points="120,146 307,151 494,156 620,161"
+                    fill="none" stroke="#EF4444" stroke-width="2.5"
+                    stroke-linejoin="round" stroke-linecap="round"/>
+
+          <!-- Points IPS Cousteau -->
+          <circle cx="120" cy="146" r="4" fill="#EF4444" stroke="var(--bg-secondary)" stroke-width="2"/>
+          <circle cx="307" cy="151" r="4" fill="#EF4444" stroke="var(--bg-secondary)" stroke-width="2"/>
+          <circle cx="494" cy="156" r="4" fill="#EF4444" stroke="var(--bg-secondary)" stroke-width="2"/>
+          <circle cx="620" cy="161" r="4" fill="#EF4444" stroke="var(--bg-secondary)" stroke-width="2"/>
+
+          <!-- Valeurs IPS Cousteau -->
+          <text x="120" y="162" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#EF4444" font-weight="600">78,2</text>
+          <text x="307" y="167" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#EF4444" font-weight="600">77,1</text>
+          <text x="494" y="172" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#EF4444" font-weight="600">75,9</text>
+          <text x="620" y="177" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#EF4444" font-weight="600">74,8</text>
+
+          <!-- Courbe moyenne académique -->
+          <polyline points="120,71 307,69 494,68 620,66"
+                    fill="none" stroke="#F59E0B" stroke-width="2.5"
+                    stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="7,4"/>
+
+          <!-- Points moyenne académique -->
+          <circle cx="120" cy="71" r="4" fill="#F59E0B" stroke="var(--bg-secondary)" stroke-width="2"/>
+          <circle cx="307" cy="69" r="4" fill="#F59E0B" stroke="var(--bg-secondary)" stroke-width="2"/>
+          <circle cx="494" cy="68" r="4" fill="#F59E0B" stroke="var(--bg-secondary)" stroke-width="2"/>
+          <circle cx="620" cy="66" r="4" fill="#F59E0B" stroke="var(--bg-secondary)" stroke-width="2"/>
+
+          <!-- Valeurs moyenne académique -->
+          <text x="120" y="63" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#F59E0B" font-weight="600">103</text>
+          <text x="307" y="61" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#F59E0B" font-weight="600">103,5</text>
+          <text x="494" y="60" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#F59E0B" font-weight="600">103,8</text>
+          <text x="620" y="59" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#F59E0B" font-weight="600">104</text>
+
+          <!-- Annotation écart -->
+          <line x1="635" y1="66" x2="635" y2="161" stroke="var(--text-tertiary)" stroke-width="1" stroke-dasharray="3,2" opacity="0.5"/>
+          <text x="648" y="117" text-anchor="start" font-family="Inter,sans-serif" font-size="9" fill="var(--text-tertiary)" font-style="italic">écart ≈ 29</text>
+
+          <!-- Labels X -->
+          <text x="120" y="222" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="var(--text-tertiary)">2022</text>
+          <text x="307" y="222" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="var(--text-tertiary)">2023</text>
+          <text x="494" y="222" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="var(--text-tertiary)">2024</text>
+          <text x="620" y="222" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="var(--text-tertiary)">2025</text>
+
+          <!-- Labels Y -->
+          <text x="46" y="208" text-anchor="end" font-family="Inter,sans-serif" font-size="10" fill="var(--text-tertiary)">65</text>
+          <text x="46" y="170" text-anchor="end" font-family="Inter,sans-serif" font-size="10" fill="var(--text-tertiary)">74</text>
+          <text x="46" y="132" text-anchor="end" font-family="Inter,sans-serif" font-size="10" fill="var(--text-tertiary)">83</text>
+          <text x="46" y="95"  text-anchor="end" font-family="Inter,sans-serif" font-size="10" fill="var(--text-tertiary)">92</text>
+          <text x="46" y="57"  text-anchor="end" font-family="Inter,sans-serif" font-size="10" fill="var(--text-tertiary)">101</text>
+          <text x="46" y="20"  text-anchor="end" font-family="Inter,sans-serif" font-size="10" fill="var(--text-tertiary)">110</text>
+
+          <!-- Légende -->
+          <circle cx="190" cy="238" r="4" fill="#EF4444"/>
+          <text x="198" y="242" font-family="Inter,sans-serif" font-size="10" fill="var(--text-tertiary)">IPS Cousteau</text>
+          <line x1="300" y1="238" x2="316" y2="238" stroke="#F59E0B" stroke-width="2.5" stroke-dasharray="5,3"/>
+          <circle cx="326" cy="238" r="4" fill="#F59E0B" stroke="var(--bg-secondary)" stroke-width="2"/>
+          <text x="334" y="242" font-family="Inter,sans-serif" font-size="10" fill="var(--text-tertiary)">Moyenne académique Normandie</text>
+        </svg>
+      </div>
+    </div>
+    <br>
+
     <p class="section-title">… sans réels moyens humains supplémentaires !</p>
     <p class="prose">Même si la hausse des effectifs s’est traduite par une augmentation des moyens d’enseignement alloués à l’établissement, il n’en reste pas moins que les <em>besoins d’encadrement nécessaires ne sont pas affectés dans l’établissement</em>. En effet, l’augmentation des élèves nécessite un travail conséquent pour l’ensemble des équipes administratives, sociales, de santé et de vie scolaire.</p>
     <p class="prose">Depuis plusieurs années, de <emlien onclick="showPage('historique', this)"><u>nombreuses démarches</u></emlien> ont été engagées. En 2025 et 2026, nous avons sollicité deux audiences afin d’être entendus sur ce sujet et d’obtenir les moyens escomptés. Pour le moment, <em>toutes nos actions restent sans réponse</em>.</p>
@@ -769,9 +857,9 @@
 
     <div class="chips">
       <button class="chip active" onclick="filter('all', this)">Toutes (12)</button>
-      <button class="chip" onclick="filter('sans-reponse', this)">Sans réponse (6)</button>
+      <button class="chip" onclick="filter('sans-reponse', this)">Sans réponse (9)</button>
       <button class="chip" onclick="filter('en-attente', this)">En attente (1)</button>
-      <button class="chip" onclick="filter('traite', this)">Traitées (5)</button>
+      <button class="chip" onclick="filter('traite', this)">Demande acceptée (2)</button>
     </div>
 
     <div class="timeline" id="tl">
@@ -841,7 +929,7 @@
             <p class="panel-body">Causes de la demande : +150 élèves entre 2022 et 2025. Public de plus en plus défavorisé (IPS en forte baisse). Augmentation des faits de violence. L'équipe souhaite que l'institution réagisse avant que les personnels, déjà épuisés, ne craquent.</p>
             <div class="panel-meta">
               <div class="meta-item"><span class="meta-label">Signataires</span><span class="meta-value">Représentants des enseignants</span></div>
-              <div class="meta-item"><span class="meta-label">Statut</span><span class="spill meta-value"><span class="dot" style="background:#22C55E"></span>Traité</span></div>
+              <div class="meta-item"><span class="meta-label">Statut</span><span class="spill meta-value"><span class="dot" style="background:#22C55E"></span>Demande acceptée</span></div>
             </div>
           </div></div>
         </div>
@@ -880,7 +968,7 @@
             <p class="panel-body">Demande d'audience auprès du DASEN en raison de l'épuisement et des tensions au sein des équipes enseignante et de vie scolaire. Audience accordée.</p>
             <div class="panel-meta">
               <div class="meta-item"><span class="meta-label">Signataires</span><span class="meta-value">Équipe enseignante</span></div>
-              <div class="meta-item"><span class="meta-label">Statut</span><span class="spill meta-value"><span class="dot" style="background:#22C55E"></span>Traité</span></div>
+              <div class="meta-item"><span class="meta-label">Statut</span><span class="spill meta-value"><span class="dot" style="background:#22C55E"></span>Demande acceptée</span></div>
             </div>
           </div></div>
         </div>
@@ -907,12 +995,12 @@
       <div class="year-block" data-year="2024">
         <div class="year-marker"><span class="year-text">2024</span></div>
 
-        <div class="entry" data-status="traite" onclick="toggle(this)">
+        <div class="entry" data-status="sans-reponse" onclick="toggle(this)">
           <div class="entry-trigger">
             <span class="entry-date">17 déc.</span>
             <span class="entry-badge badge-courrier">Courrier</span>
             <span class="entry-title">Courrier du chef d'établissement à la rectrice — vie scolaire et infirmière</span>
-            <span class="e-dot s-tr"></span>
+            <span class="e-dot s-sr"></span>
             <span class="chevron"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
           </div>
           <div class="entry-panel"><div class="panel-inner">
@@ -920,7 +1008,7 @@
             <div class="panel-meta">
               <div class="meta-item"><span class="meta-label">Signataire</span><span class="meta-value">Chef d'établissement</span></div>
               <div class="meta-item"><span class="meta-label">Destinataire</span><span class="meta-value">Madame la Rectrice</span></div>
-              <div class="meta-item"><span class="meta-label">Statut</span><span class="spill meta-value"><span class="dot" style="background:#22C55E"></span>Traité</span></div>
+              <div class="meta-item"><span class="meta-label">Statut</span><span class="spill meta-value"><span class="dot" style="background:#EF4444"></span>Sans réponse</span></div>
             </div>
           </div></div>
         </div>
@@ -943,12 +1031,12 @@
           </div></div>
         </div>
 
-        <div class="entry" data-status="traite" onclick="toggle(this)">
+        <div class="entry" data-status="sans-reponse" onclick="toggle(this)">
           <div class="entry-trigger">
             <span class="entry-date">27 févr.</span>
             <span class="entry-badge badge-courrier">Courrier</span>
             <span class="entry-title">Courrier du chef d'établissement à la rectrice — catégorie, REP+ et moyens humains</span>
-            <span class="e-dot s-tr"></span>
+            <span class="e-dot s-sr"></span>
             <span class="chevron"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
           </div>
           <div class="entry-panel"><div class="panel-inner">
@@ -956,17 +1044,17 @@
             <div class="panel-meta">
               <div class="meta-item"><span class="meta-label">Signataire</span><span class="meta-value">Chef d'établissement</span></div>
               <div class="meta-item"><span class="meta-label">Destinataire</span><span class="meta-value">Madame la Rectrice</span></div>
-              <div class="meta-item"><span class="meta-label">Statut</span><span class="spill meta-value"><span class="dot" style="background:#22C55E"></span>Traité (partiel)</span></div>
+              <div class="meta-item"><span class="meta-label">Statut</span><span class="spill meta-value"><span class="dot" style="background:#EF4444"></span>Sans réponse</span></div>
             </div>
           </div></div>
         </div>
 
-        <div class="entry" data-status="traite" onclick="toggle(this)">
+        <div class="entry" data-status="sans-reponse" onclick="toggle(this)">
           <div class="entry-trigger">
             <span class="entry-date">23 févr.</span>
             <span class="entry-badge badge-courrier">Courrier</span>
             <span class="entry-title">Courrier à Madame la Rectrice — demande de labellisation REP+</span>
-            <span class="e-dot s-tr"></span>
+            <span class="e-dot s-sr"></span>
             <span class="chevron"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
           </div>
           <div class="entry-panel"><div class="panel-inner">
@@ -974,7 +1062,7 @@
             <div class="panel-meta">
               <div class="meta-item"><span class="meta-label">Signataires</span><span class="meta-value">Équipe pédagogique</span></div>
               <div class="meta-item"><span class="meta-label">Destinataire</span><span class="meta-value">Madame la Rectrice</span></div>
-              <div class="meta-item"><span class="meta-label">Statut</span><span class="spill meta-value"><span class="dot" style="background:#22C55E"></span>Réponse négative</span></div>
+              <div class="meta-item"><span class="meta-label">Statut</span><span class="spill meta-value"><span class="dot" style="background:#EF4444"></span>Sans réponse</span></div>
             </div>
           </div></div>
         </div>
@@ -1025,7 +1113,7 @@
     <div class="legend">
       <div class="legend-item"><div class="leg-dot" style="background:#EF4444"></div>Sans réponse</div>
       <div class="legend-item"><div class="leg-dot" style="background:#F59E0B"></div>En attente</div>
-      <div class="legend-item"><div class="leg-dot" style="background:#22C55E"></div>Traitée</div>
+      <div class="legend-item"><div class="leg-dot" style="background:#22C55E"></div>Demande acceptée</div>
     </div>
   </div>
 
