@@ -275,6 +275,61 @@
     100% { box-shadow: 0 0 0 2px var(--bg), 0 0 0 11px color-mix(in srgb, var(--accent) 0%, transparent); }
   }
 
+  /* CARTE PÉTITION DANS LA TIMELINE */
+  .petition-card {
+    position: relative;
+    margin-bottom: 3px;
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, rgba(37,99,235,0.08), rgba(37,99,235,0.04));
+    border: 1px solid rgba(37,99,235,0.25);
+    padding: 14px 16px;
+  }
+  .petition-card::before {
+    content: '';
+    position: absolute; left: -26px;
+    top: 50%; transform: translateY(-50%);
+    width: 11px; height: 11px; border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+    animation: pulse-ring 2s ease-out infinite;
+    z-index: 1;
+  }
+  .petition-card-eyebrow {
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 6px;
+  }
+  .petition-card-title {
+    font-family: var(--font-display); font-size: 0.95rem; font-weight: 700;
+    color: var(--text); margin-bottom: 10px;
+  }
+  .petition-card-demands {
+    list-style: none; margin-bottom: 12px; display: flex; flex-direction: column; gap: 4px;
+  }
+  .petition-card-demands li {
+    font-size: 0.82rem; color: var(--text-secondary);
+    display: flex; align-items: baseline; gap: 7px;
+  }
+  .petition-card-demands li::before {
+    content: '→'; color: var(--accent); font-size: 10px; flex-shrink: 0;
+  }
+  .petition-card-link {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11px; font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+    border: 1px solid rgba(37,99,235,0.3);
+    border-radius: 99px;
+    padding: 4px 12px;
+    transition: background 0.18s, border-color 0.18s;
+    cursor: pointer; background: none; font-family: var(--font-sans);
+  }
+  .petition-card-link:hover {
+    background: rgba(37,99,235,0.1);
+    border-color: rgba(37,99,235,0.5);
+  }
+  .petition-card-link svg { width: 10px; height: 10px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
   /* CHIPS */
   .chips { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 2.5rem; }
   .chip {
@@ -689,8 +744,18 @@
 
       <div class="year-block" data-year="2026">
         <div class="year-marker"><span class="year-text">2026</span></div>
-        <div class="today-marker">
-          <span class="today-badge">Aujourd'hui</span>
+        <div class="petition-card">
+          <p class="petition-card-eyebrow">✦ Aujourd'hui · Pétition en cours</p>
+          <p class="petition-card-title">Nos demandes</p>
+          <ul class="petition-card-demands">
+            <li>2 postes d'AED supplémentaires</li>
+            <li>Réévaluation du secteur de l'infirmière</li>
+            <li>Création d'un second poste de CPE</li>
+          </ul>
+          <button class="petition-card-link" onclick="showPage('petition', document.querySelectorAll('.nav-btn')[2])">
+            Plus d'informations sur la pétition
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
         </div>
 
         <div class="entry" data-status="sans-reponse" onclick="toggle(this)">
