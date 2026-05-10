@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -446,7 +446,23 @@
   .legend-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--text-tertiary); }
   .leg-dot { width: 7px; height: 7px; border-radius: 50%; }
 
-  /* PAGE CONTEXTE */
+  /* FOOTER COMPTEUR */
+  .site-footer {
+    max-width: 780px; margin: 0 auto;
+    padding: 1.5rem 2rem 2.5rem;
+    display: flex; align-items: center; justify-content: center;
+    border-top: 1px solid var(--border);
+    gap: 6px;
+  }
+  .footer-visitors {
+    font-size: 11px; color: var(--text-tertiary);
+    display: flex; align-items: center; gap: 5px;
+  }
+  .footer-visitors span#visitor-count {
+    font-weight: 600; color: var(--text-secondary);
+  }
+
+  /* FOOTER COMPTEUR */
   .section-title {
     font-family: var(--font-display); font-size: 1.25rem; font-weight: 700;
     color: var(--text); margin-bottom: 0.75rem;
@@ -580,94 +596,71 @@
 
     <!-- GRAPHIQUE EFFECTIFS -->
     <div class="chart-block">
-      <p class="chart-title">Évolution des effectifs (2019–2026)</p>
+      <p class="chart-title">Évolution des effectifs (2019–2025)</p>
       <div class="chart-wrap">
         <svg viewBox="0 0 680 240" xmlns="http://www.w3.org/2000/svg" id="effectifs-svg" style="width:100%;display:block;overflow:visible">
-          <!-- Données : élèves 520→558→591→622→648→670→686→672 ; AED constant 6 -->
-          <!-- Axes : Y élèves [480–720], Y AED [0–12] ; X : 8 années -->
+          <!-- Données : 2019=365, 2020=398, 2021=393, 2022=384, 2023=445, 2024=478, 2025=505 -->
           <!-- Zone intérieure : x=52..620, y=16..204, W=568, H=188 -->
+          <!-- Échelle Y : 320–520, formule : y = 204 - ((v-320)/200)*188 -->
+          <!-- X positions (7 pts, 6 intervalles) : 52, 146, 240, 335, 429, 523, 620 -->
+          <!-- Y : 365→162, 398→131, 393→135, 384→144, 445→87, 478→56, 505→30 -->
 
-          <!-- Lignes de grille horizontales (ticks élèves : 520,560,600,640,680,720) -->
-          <!-- y = 204 - ((v-480)/240)*188 -->
-          <!-- 520→188.7  560→157.3  600→126  640→94.7  680→63.3  720→32 (≈16 top) -->
-          <line x1="52" x2="620" y1="189" y2="189" stroke="var(--border)" stroke-width="1"/>
-          <line x1="52" x2="620" y1="157" y2="157" stroke="var(--border)" stroke-width="1"/>
-          <line x1="52" x2="620" y1="126" y2="126" stroke="var(--border)" stroke-width="1"/>
-          <line x1="52" x2="620" y1="95"  y2="95"  stroke="var(--border)" stroke-width="1"/>
-          <line x1="52" x2="620" y1="63"  y2="63"  stroke="var(--border)" stroke-width="1"/>
-          <line x1="52" x2="620" y1="32"  y2="32"  stroke="var(--border)" stroke-width="1"/>
-
-          <!-- Axe X -->
+          <!-- Lignes de grille horizontales : 320, 360, 400, 440, 480, 520 -->
+          <!-- y : 320→204, 360→166, 400→129, 440→91, 480→54, 520→16 -->
           <line x1="52" x2="620" y1="204" y2="204" stroke="var(--border)" stroke-width="1"/>
-
-          <!-- X positions (0..7) → 52 + i*(568/7) = 52, 133, 214, 295, 376, 457, 539, 620 -->
-          <!-- Y élèves : 204 - ((v-480)/240)*188 -->
-          <!-- 520→188.7  558→158.9  591→133.1  622→108.9  648→88.5  670→71.3  686→59.1  672→69.9 -->
+          <line x1="52" x2="620" y1="166" y2="166" stroke="var(--border)" stroke-width="1"/>
+          <line x1="52" x2="620" y1="129" y2="129" stroke="var(--border)" stroke-width="1"/>
+          <line x1="52" x2="620" y1="91"  y2="91"  stroke="var(--border)" stroke-width="1"/>
+          <line x1="52" x2="620" y1="54"  y2="54"  stroke="var(--border)" stroke-width="1"/>
+          <line x1="52" x2="620" y1="16"  y2="16"  stroke="var(--border)" stroke-width="1"/>
 
           <!-- Zone remplie élèves -->
-          <path d="M52,189 L133,159 L214,133 L295,109 L376,89 L457,71 L539,59 L620,70 L620,204 L52,204 Z"
+          <path d="M52,162 L146,131 L240,135 L335,144 L429,87 L523,56 L620,30 L620,204 L52,204 Z"
                 fill="rgba(37,99,235,0.13)"/>
 
           <!-- Courbe élèves -->
-          <polyline points="52,189 133,159 214,133 295,109 376,89 457,71 539,59 620,70"
+          <polyline points="52,162 146,131 240,135 335,144 429,87 523,56 620,30"
                     fill="none" stroke="#2563EB" stroke-width="2.5"
                     stroke-linejoin="round" stroke-linecap="round"/>
 
-          <!-- AED constant à 6 → y = 204 - (6/12)*188 = 204-94 = 110 -->
-          <line x1="52" x2="620" y1="110" y2="110"
-                stroke="#F59E0B" stroke-width="2" stroke-dasharray="5,4"/>
-
           <!-- Points élèves -->
-          <circle cx="52"  cy="189" r="4" fill="#2563EB" stroke="var(--bg-secondary)" stroke-width="2"/>
-          <circle cx="133" cy="159" r="4" fill="#2563EB" stroke="var(--bg-secondary)" stroke-width="2"/>
-          <circle cx="214" cy="133" r="4" fill="#2563EB" stroke="var(--bg-secondary)" stroke-width="2"/>
-          <circle cx="295" cy="109" r="4" fill="#2563EB" stroke="var(--bg-secondary)" stroke-width="2"/>
-          <circle cx="376" cy="89"  r="4" fill="#2563EB" stroke="var(--bg-secondary)" stroke-width="2"/>
-          <circle cx="457" cy="71"  r="4" fill="#2563EB" stroke="var(--bg-secondary)" stroke-width="2"/>
-          <circle cx="539" cy="59"  r="4" fill="#2563EB" stroke="var(--bg-secondary)" stroke-width="2"/>
-          <circle cx="620" cy="70"  r="4" fill="#2563EB" stroke="var(--bg-secondary)" stroke-width="2"/>
+          <circle cx="52"  cy="162" r="4" fill="#2563EB" stroke="var(--bg-secondary)" stroke-width="2"/>
+          <circle cx="146" cy="131" r="4" fill="#2563EB" stroke="var(--bg-secondary)" stroke-width="2"/>
+          <circle cx="240" cy="135" r="4" fill="#2563EB" stroke="var(--bg-secondary)" stroke-width="2"/>
+          <circle cx="335" cy="144" r="4" fill="#2563EB" stroke="var(--bg-secondary)" stroke-width="2"/>
+          <circle cx="429" cy="87"  r="4" fill="#2563EB" stroke="var(--bg-secondary)" stroke-width="2"/>
+          <circle cx="523" cy="56"  r="4" fill="#2563EB" stroke="var(--bg-secondary)" stroke-width="2"/>
+          <circle cx="620" cy="30"  r="4" fill="#2563EB" stroke="var(--bg-secondary)" stroke-width="2"/>
 
-          <!-- Points AED -->
-          <circle cx="52"  cy="110" r="3.5" fill="#F59E0B" stroke="var(--bg-secondary)" stroke-width="2"/>
-          <circle cx="620" cy="110" r="3.5" fill="#F59E0B" stroke="var(--bg-secondary)" stroke-width="2"/>
-
-          <!-- Labels Y gauche (élèves) -->
-          <text x="46" y="193" text-anchor="end" font-family="Inter,sans-serif" font-size="10" fill="var(--text-tertiary)">520</text>
-          <text x="46" y="161" text-anchor="end" font-family="Inter,sans-serif" font-size="10" fill="var(--text-tertiary)">560</text>
-          <text x="46" y="130" text-anchor="end" font-family="Inter,sans-serif" font-size="10" fill="var(--text-tertiary)">600</text>
-          <text x="46" y="99"  text-anchor="end" font-family="Inter,sans-serif" font-size="10" fill="var(--text-tertiary)">640</text>
-          <text x="46" y="67"  text-anchor="end" font-family="Inter,sans-serif" font-size="10" fill="var(--text-tertiary)">680</text>
-          <text x="46" y="36"  text-anchor="end" font-family="Inter,sans-serif" font-size="10" fill="var(--text-tertiary)">720</text>
-
-          <!-- Labels Y droite (AED) -->
-          <text x="626" y="114" text-anchor="start" font-family="Inter,sans-serif" font-size="10" fill="#F59E0B">6 AED</text>
+          <!-- Labels Y gauche -->
+          <text x="46" y="208" text-anchor="end" font-family="Inter,sans-serif" font-size="10" fill="var(--text-tertiary)">320</text>
+          <text x="46" y="170" text-anchor="end" font-family="Inter,sans-serif" font-size="10" fill="var(--text-tertiary)">360</text>
+          <text x="46" y="133" text-anchor="end" font-family="Inter,sans-serif" font-size="10" fill="var(--text-tertiary)">400</text>
+          <text x="46" y="95"  text-anchor="end" font-family="Inter,sans-serif" font-size="10" fill="var(--text-tertiary)">440</text>
+          <text x="46" y="58"  text-anchor="end" font-family="Inter,sans-serif" font-size="10" fill="var(--text-tertiary)">480</text>
+          <text x="46" y="20"  text-anchor="end" font-family="Inter,sans-serif" font-size="10" fill="var(--text-tertiary)">520</text>
 
           <!-- Labels X -->
           <text x="52"  y="222" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="var(--text-tertiary)">2019</text>
-          <text x="133" y="222" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="var(--text-tertiary)">2020</text>
-          <text x="214" y="222" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="var(--text-tertiary)">2021</text>
-          <text x="295" y="222" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="var(--text-tertiary)">2022</text>
-          <text x="376" y="222" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="var(--text-tertiary)">2023</text>
-          <text x="457" y="222" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="var(--text-tertiary)">2024</text>
-          <text x="539" y="222" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="var(--text-tertiary)">2025</text>
-          <text x="620" y="222" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="var(--text-tertiary)">2026</text>
+          <text x="146" y="222" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="var(--text-tertiary)">2020</text>
+          <text x="240" y="222" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="var(--text-tertiary)">2021</text>
+          <text x="335" y="222" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="var(--text-tertiary)">2022</text>
+          <text x="429" y="222" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="var(--text-tertiary)">2023</text>
+          <text x="523" y="222" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="var(--text-tertiary)">2024</text>
+          <text x="620" y="222" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="var(--text-tertiary)">2025</text>
 
-          <!-- Valeurs au-dessus des points élèves -->
-          <text x="52"  y="183" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2563EB" font-weight="600">520</text>
-          <text x="133" y="153" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2563EB" font-weight="600">558</text>
-          <text x="214" y="127" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2563EB" font-weight="600">591</text>
-          <text x="295" y="103" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2563EB" font-weight="600">622</text>
-          <text x="376" y="83"  text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2563EB" font-weight="600">648</text>
-          <text x="457" y="65"  text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2563EB" font-weight="600">670</text>
-          <text x="539" y="53"  text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2563EB" font-weight="600">686</text>
-          <text x="620" y="64"  text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2563EB" font-weight="600">672</text>
+          <!-- Valeurs au-dessus des points -->
+          <text x="52"  y="156" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2563EB" font-weight="600">365</text>
+          <text x="146" y="125" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2563EB" font-weight="600">398</text>
+          <text x="240" y="129" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2563EB" font-weight="600">393</text>
+          <text x="335" y="138" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2563EB" font-weight="600">384</text>
+          <text x="429" y="81"  text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2563EB" font-weight="600">445</text>
+          <text x="523" y="50"  text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2563EB" font-weight="600">478</text>
+          <text x="620" y="24"  text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2563EB" font-weight="600">505</text>
 
           <!-- Légende -->
           <circle cx="490" cy="236" r="4" fill="#2563EB"/>
           <text x="498" y="240" font-family="Inter,sans-serif" font-size="10" fill="var(--text-tertiary)">Élèves</text>
-          <line x1="548" y1="236" x2="564" y2="236" stroke="#F59E0B" stroke-width="2" stroke-dasharray="4,3"/>
-          <circle cx="556" cy="236" r="3" fill="#F59E0B"/>
-          <text x="568" y="240" font-family="Inter,sans-serif" font-size="10" fill="var(--text-tertiary)">Postes AED</text>
         </svg>
       </div>
     </div>
@@ -686,10 +679,10 @@
     </div>
 
     <div class="chips">
-      <button class="chip active" onclick="filter('all', this)">Toutes (6)</button>
-      <button class="chip" onclick="filter('sans-reponse', this)">Sans réponse (4)</button>
+      <button class="chip active" onclick="filter('all', this)">Toutes (12)</button>
+      <button class="chip" onclick="filter('sans-reponse', this)">Sans réponse (6)</button>
       <button class="chip" onclick="filter('en-attente', this)">En attente (1)</button>
-      <button class="chip" onclick="filter('traite', this)">Traitées (1)</button>
+      <button class="chip" onclick="filter('traite', this)">Traitées (5)</button>
     </div>
 
     <div class="timeline" id="tl">
@@ -699,61 +692,19 @@
         <div class="today-marker">
           <span class="today-badge">Aujourd'hui</span>
         </div>
-        
-        <div class="entry" data-status="sans-reponse" onclick="toggle(this)">
-          <div class="entry-trigger">
-            <span class="entry-date">4 mars</span>
-            <span class="entry-badge badge-reunion">Réunion</span>
-            <span class="entry-title">Audience à la DSDEN</span>
-            <span class="e-dot s-sr"></span>
-            <span class="chevron"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
-          </div>
-          <div class="entry-panel"><div class="panel-inner">
-            <p class="panel-body">Revendications : Postes supplémentaires d'AED, de CPE, révision de la carte de suivi de l'infirmière.</p>
-            <div class="panel-meta">
-              <div class="meta-item"><span class="meta-label">Cadre</span><span class="meta-value">Audience - Présence de la DAASEN</span></div>
-              <div class="meta-item"><span class="meta-label">Référence</span><span class="meta-value">2026-03-AED-07</span></div>
-              <div class="meta-item"><span class="meta-label">Statut</span><span class="spill meta-value"><span class="dot" style="background:#F59E0B"></span>En attente</span></div>
-            </div>
-          </div></div>
-        </div>
 
         <div class="entry" data-status="sans-reponse" onclick="toggle(this)">
           <div class="entry-trigger">
-            <span class="entry-date">janvier</span>
+            <span class="entry-date">2 avr.</span>
             <span class="entry-badge badge-alerte">Alerte</span>
-            <span class="entry-title">Demande d'audience auprès du DASEN</span>
+            <span class="entry-title">Motion des enseignants et des parents d'élèves</span>
             <span class="e-dot s-sr"></span>
             <span class="chevron"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
           </div>
           <div class="entry-panel"><div class="panel-inner">
-            <p class="panel-body">Causes de la demande: +150 élèves entre 2022 et 2026. Public de plus en plus défavorisé (IPS en forte baisse). Augmentation des faits de violence. Personnels épuisés.</p>
+            <p class="panel-body">Demande de renforcement immédiat des moyens humains notamment en vie scolaire, de création d'un second poste de CPE et de la révision du secteur alloué à l'infirmière pour augmenter son temps de présence dans l'établissement. Le tout pour faire face aux difficultés liées à l'augmentation brutale des effectifs.</p>
             <div class="panel-meta">
-              <div class="meta-item"><span class="meta-label">Signataire</span><span class="meta-value">Réprésentants des professeurs</span></div>
-              <div class="meta-item"><span class="meta-label">Référence</span><span class="meta-value">2025-03-AED-07</span></div>
-              <div class="meta-item"><span class="meta-label">Statut</span><span class="spill meta-value"><span class="dot" style="background:#22C55E"></span>Traité</span></div>
-            </div>
-          </div></div>
-        </div>
-        
-      </div>
-
-      <div class="year-block" data-year="2025">
-        <div class="year-marker"><span class="year-text">2025</span></div>
-
-        <div class="entry" data-status="sans-reponse" onclick="toggle(this)">
-          <div class="entry-trigger">
-            <span class="entry-date">14 mars</span>
-            <span class="entry-badge badge-alerte">Alerte</span>
-            <span class="entry-title">Demande de poste AED supplémentaire — cour sud</span>
-            <span class="e-dot s-sr"></span>
-            <span class="chevron"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
-          </div>
-          <div class="entry-panel"><div class="panel-inner">
-            <p class="panel-body">La cour sud accueille désormais 280 élèves lors des récréations, pour un seul assistant d'éducation en surveillance. Le protocole minimal impose un ratio de 1 pour 150. Aucune réponse reçue à ce jour.</p>
-            <div class="panel-meta">
-              <div class="meta-item"><span class="meta-label">Signataire</span><span class="meta-value">M. Leroy, chef de file AED</span></div>
-              <div class="meta-item"><span class="meta-label">Référence</span><span class="meta-value">2025-03-AED-07</span></div>
+              <div class="meta-item"><span class="meta-label">Signataires</span><span class="meta-value">Enseignants et parents d'élèves</span></div>
               <div class="meta-item"><span class="meta-label">Statut</span><span class="spill meta-value"><span class="dot" style="background:#EF4444"></span>Sans réponse</span></div>
             </div>
           </div></div>
@@ -761,18 +712,185 @@
 
         <div class="entry" data-status="en-attente" onclick="toggle(this)">
           <div class="entry-trigger">
-            <span class="entry-date">8 jan.</span>
-            <span class="entry-badge badge-courrier">Courrier</span>
-            <span class="entry-title">Signalement des conditions de surveillance au rectorat</span>
+            <span class="entry-date">4 mars</span>
+            <span class="entry-badge badge-reunion">Réunion</span>
+            <span class="entry-title">Audience à la DSDEN — postes AED, CPE et infirmière</span>
             <span class="e-dot s-ea"></span>
             <span class="chevron"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
           </div>
           <div class="entry-panel"><div class="panel-inner">
-            <p class="panel-body">Courrier cosigné par l'ensemble de l'équipe de vie scolaire, adressé à l'inspecteur de l'académie. Accusé de réception reçu le 15 janvier. Aucune suite concrète à ce jour.</p>
+            <p class="panel-body">Revendications : postes supplémentaires d'AED, de CPE, révision de la carte de suivi de l'infirmière. En attente d'une réponse.</p>
             <div class="panel-meta">
-              <div class="meta-item"><span class="meta-label">Signataires</span><span class="meta-value">Collectif — 11 personnes</span></div>
-              <div class="meta-item"><span class="meta-label">Référence</span><span class="meta-value">2025-01-RECT-02</span></div>
+              <div class="meta-item"><span class="meta-label">Cadre</span><span class="meta-value">Audience DSDEN</span></div>
               <div class="meta-item"><span class="meta-label">Statut</span><span class="spill meta-value"><span class="dot" style="background:#F59E0B"></span>En attente</span></div>
+            </div>
+          </div></div>
+        </div>
+
+        <div class="entry" data-status="traite" onclick="toggle(this)">
+          <div class="entry-trigger">
+            <span class="entry-date">janvier</span>
+            <span class="entry-badge badge-alerte">Alerte</span>
+            <span class="entry-title">Nouvelle demande d'audience des enseignants auprès du DASEN</span>
+            <span class="e-dot s-tr"></span>
+            <span class="chevron"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+          </div>
+          <div class="entry-panel"><div class="panel-inner">
+            <p class="panel-body">Causes de la demande : +150 élèves entre 2022 et 2025. Public de plus en plus défavorisé (IPS en forte baisse). Augmentation des faits de violence. L'équipe souhaite que l'institution réagisse avant que les personnels, déjà épuisés, ne craquent.</p>
+            <div class="panel-meta">
+              <div class="meta-item"><span class="meta-label">Signataires</span><span class="meta-value">Représentants des enseignants</span></div>
+              <div class="meta-item"><span class="meta-label">Statut</span><span class="spill meta-value"><span class="dot" style="background:#22C55E"></span>Traité</span></div>
+            </div>
+          </div></div>
+        </div>
+
+      </div>
+
+      <div class="year-block" data-year="2025">
+        <div class="year-marker"><span class="year-text">2025</span></div>
+        
+        <div class="entry" data-status="sans-reponse" onclick="toggle(this)">
+          <div class="entry-trigger">
+            <span class="entry-date">mai</span>
+            <span class="entry-badge badge-reunion">Réunion</span>
+            <span class="entry-title">Audience à la DSDEN — moyens humains et labellisation REP+</span>
+            <span class="e-dot s-sr"></span>
+            <span class="chevron"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+          </div>
+          <div class="entry-panel"><div class="panel-inner">
+            <p class="panel-body">Demandes de moyens humains supplémentaires et de la labellisation REP+. Réponse négative.</p>
+            <div class="panel-meta">
+              <div class="meta-item"><span class="meta-label">Cadre</span><span class="meta-value">Audience DSDEN</span></div>
+              <div class="meta-item"><span class="meta-label">Statut</span><span class="spill meta-value"><span class="dot" style="background:#EF4444"></span>Sans réponse</span></div>
+            </div>
+          </div></div>
+        </div>
+
+        <div class="entry" data-status="traite" onclick="toggle(this)">
+          <div class="entry-trigger">
+            <span class="entry-date">4 avr.</span>
+            <span class="entry-badge badge-alerte">Alerte</span>
+            <span class="entry-title">Demande d'audience des enseignants auprès du DASEN</span>
+            <span class="e-dot s-tr"></span>
+            <span class="chevron"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+          </div>
+          <div class="entry-panel"><div class="panel-inner">
+            <p class="panel-body">Demande d'audience auprès du DASEN en raison de l'épuisement et des tensions au sein des équipes enseignante et de vie scolaire. Audience accordée.</p>
+            <div class="panel-meta">
+              <div class="meta-item"><span class="meta-label">Signataires</span><span class="meta-value">Équipe enseignante</span></div>
+              <div class="meta-item"><span class="meta-label">Statut</span><span class="spill meta-value"><span class="dot" style="background:#22C55E"></span>Traité</span></div>
+            </div>
+          </div></div>
+        </div>
+
+        <div class="entry" data-status="sans-reponse" onclick="toggle(this)">
+          <div class="entry-trigger">
+            <span class="entry-date">févr.</span>
+            <span class="entry-badge badge-alerte">Alerte</span>
+            <span class="entry-title">Motion des parents pour l'adaptation des bâtiments et des moyens humains</span>
+            <span class="e-dot s-sr"></span>
+            <span class="chevron"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+          </div>
+          <div class="entry-panel"><div class="panel-inner">
+            <p class="panel-body">Motion des représentants des parents pour l'adaptation des bâtiments en lien avec l'augmentation des effectifs, la dégradation du climat scolaire et la transformation de l'identité du collège. Demandes : plus de moyens humains et extension des bâtiments.</p>
+            <div class="panel-meta">
+              <div class="meta-item"><span class="meta-label">Signataires</span><span class="meta-value">Représentants des parents d'élèves</span></div>
+              <div class="meta-item"><span class="meta-label">Statut</span><span class="spill meta-value"><span class="dot" style="background:#EF4444"></span>Sans réponse</span></div>
+            </div>
+          </div></div>
+        </div>
+
+      </div>
+
+      <div class="year-block" data-year="2024">
+        <div class="year-marker"><span class="year-text">2024</span></div>
+
+        <div class="entry" data-status="traite" onclick="toggle(this)">
+          <div class="entry-trigger">
+            <span class="entry-date">17 déc.</span>
+            <span class="entry-badge badge-courrier">Courrier</span>
+            <span class="entry-title">Courrier du chef d'établissement à la rectrice — vie scolaire et infirmière</span>
+            <span class="e-dot s-tr"></span>
+            <span class="chevron"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+          </div>
+          <div class="entry-panel"><div class="panel-inner">
+            <p class="panel-body">Demande d'optimisation des moyens de vie scolaire attribués au collège. Demande de réévaluation du temps de présence de l'infirmière en réorganisant la répartition des écoles du secteur entre les différentes infirmières.</p>
+            <div class="panel-meta">
+              <div class="meta-item"><span class="meta-label">Signataire</span><span class="meta-value">Chef d'établissement</span></div>
+              <div class="meta-item"><span class="meta-label">Destinataire</span><span class="meta-value">Madame la Rectrice</span></div>
+              <div class="meta-item"><span class="meta-label">Statut</span><span class="spill meta-value"><span class="dot" style="background:#22C55E"></span>Traité</span></div>
+            </div>
+          </div></div>
+        </div>
+
+        <div class="entry" data-status="sans-reponse" onclick="toggle(this)">
+          <div class="entry-trigger">
+            <span class="entry-date">21 oct.</span>
+            <span class="entry-badge badge-courrier">Courrier</span>
+            <span class="entry-title">Courrier du chef d'établissement au département — bâtiments provisoires</span>
+            <span class="e-dot s-sr"></span>
+            <span class="chevron"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+          </div>
+          <div class="entry-panel"><div class="panel-inner">
+            <p class="panel-body">Demande d'implantation de bâtiments provisoires pour faire face à l'augmentation des effectifs et à la réforme du choc des savoirs. Demande refusée.</p>
+            <div class="panel-meta">
+              <div class="meta-item"><span class="meta-label">Signataire</span><span class="meta-value">Chef d'établissement</span></div>
+              <div class="meta-item"><span class="meta-label">Destinataire</span><span class="meta-value">Département</span></div>
+              <div class="meta-item"><span class="meta-label">Statut</span><span class="spill meta-value"><span class="dot" style="background:#EF4444"></span>Refusé</span></div>
+            </div>
+          </div></div>
+        </div>
+
+        <div class="entry" data-status="traite" onclick="toggle(this)">
+          <div class="entry-trigger">
+            <span class="entry-date">27 févr.</span>
+            <span class="entry-badge badge-courrier">Courrier</span>
+            <span class="entry-title">Courrier du chef d'établissement à la rectrice — catégorie, REP+ et moyens humains</span>
+            <span class="e-dot s-tr"></span>
+            <span class="chevron"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+          </div>
+          <div class="entry-panel"><div class="panel-inner">
+            <p class="panel-body">Demande de changement de catégorie financière du collège, de labellisation REP+, et de moyens humains supplémentaires pour la rentrée (demi-poste service de gestion + un poste d'AED). Demandes partiellement mises en œuvre.</p>
+            <div class="panel-meta">
+              <div class="meta-item"><span class="meta-label">Signataire</span><span class="meta-value">Chef d'établissement</span></div>
+              <div class="meta-item"><span class="meta-label">Destinataire</span><span class="meta-value">Madame la Rectrice</span></div>
+              <div class="meta-item"><span class="meta-label">Statut</span><span class="spill meta-value"><span class="dot" style="background:#22C55E"></span>Traité (partiel)</span></div>
+            </div>
+          </div></div>
+        </div>
+
+        <div class="entry" data-status="traite" onclick="toggle(this)">
+          <div class="entry-trigger">
+            <span class="entry-date">23 févr.</span>
+            <span class="entry-badge badge-courrier">Courrier</span>
+            <span class="entry-title">Courrier à Madame la Rectrice — demande de labellisation REP+</span>
+            <span class="e-dot s-tr"></span>
+            <span class="chevron"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+          </div>
+          <div class="entry-panel"><div class="panel-inner">
+            <p class="panel-body">Courrier de l'équipe pédagogique à Madame la Rectrice pour demande de labellisation REP+. Réponse négative reçue.</p>
+            <div class="panel-meta">
+              <div class="meta-item"><span class="meta-label">Signataires</span><span class="meta-value">Équipe pédagogique</span></div>
+              <div class="meta-item"><span class="meta-label">Destinataire</span><span class="meta-value">Madame la Rectrice</span></div>
+              <div class="meta-item"><span class="meta-label">Statut</span><span class="spill meta-value"><span class="dot" style="background:#22C55E"></span>Réponse négative</span></div>
+            </div>
+          </div></div>
+        </div>
+
+        <div class="entry" data-status="sans-reponse" onclick="toggle(this)">
+          <div class="entry-trigger">
+            <span class="entry-date">6 févr.</span>
+            <span class="entry-badge badge-alerte">Alerte</span>
+            <span class="entry-title">Motion au CA — demande de 2 postes AED et d'un demi-poste CPE</span>
+            <span class="e-dot s-sr"></span>
+            <span class="chevron"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
+          </div>
+          <div class="entry-panel"><div class="panel-inner">
+            <p class="panel-body">Motion des enseignants, de la vie scolaire et des AESH au conseil d'administration. Demande de 2 postes d'AED à temps plein et d'un demi-poste de CPE. Réponse : 1 seul poste d'AED accordé.</p>
+            <div class="panel-meta">
+              <div class="meta-item"><span class="meta-label">Signataires</span><span class="meta-value">Enseignants, vie scolaire, AESH</span></div>
+              <div class="meta-item"><span class="meta-label">Cadre</span><span class="meta-value">Conseil d'administration</span></div>
+              <div class="meta-item"><span class="meta-label">Statut</span><span class="spill meta-value"><span class="dot" style="background:#EF4444"></span>Sans réponse (partielle)</span></div>
             </div>
           </div></div>
         </div>
@@ -783,83 +901,21 @@
 
         <div class="entry" data-status="sans-reponse" onclick="toggle(this)">
           <div class="entry-trigger">
-            <span class="entry-date">5 oct.</span>
-            <span class="entry-badge badge-reunion">Réunion</span>
-            <span class="entry-title">Demande de plan d'urgence lors du conseil d'administration</span>
+            <span class="entry-date">5 déc.</span>
+            <span class="entry-badge badge-alerte">Alerte</span>
+            <span class="entry-title">Problème du faible nombre d'AED évoqué au conseil d'administration</span>
             <span class="e-dot s-sr"></span>
             <span class="chevron"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
           </div>
           <div class="entry-panel"><div class="panel-inner">
-            <p class="panel-body">Point inscrit à l'ordre du jour par les représentants du personnel. Acté oralement que la situation serait "examinée avec soin". Aucun compte-rendu, aucune mesure n'a suivi.</p>
+            <p class="panel-body">Le problème du faible nombre d'AED par rapport aux besoins réels est évoqué lors des échanges du conseil d'administration. Pas de réponse.</p>
             <div class="panel-meta">
-              <div class="meta-item"><span class="meta-label">Cadre</span><span class="meta-value">CA — session ordinaire</span></div>
-              <div class="meta-item"><span class="meta-label">Référence</span><span class="meta-value">2023-10-CA-03</span></div>
-              <div class="meta-item"><span class="meta-label">Statut</span><span class="spill meta-value"><span class="dot" style="background:#EF4444"></span>Sans réponse</span></div>
-            </div>
-          </div></div>
-        </div>
-      </div>
-
-      <div class="year-block" data-year="2022">
-        <div class="year-marker"><span class="year-text">2022</span></div>
-
-        <div class="entry" data-status="sans-reponse" onclick="toggle(this)">
-          <div class="entry-trigger">
-            <span class="entry-date">22 sept.</span>
-            <span class="entry-badge badge-reunion">Réunion</span>
-            <span class="entry-title">Demande d'étude sur les effectifs — conseil d'administration</span>
-            <span class="e-dot s-sr"></span>
-            <span class="chevron"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
-          </div>
-          <div class="entry-panel"><div class="panel-inner">
-            <p class="panel-body">Demande d'une étude comparative effectifs/moyens de surveillance. La direction a pris acte. Aucune étude, aucun retour depuis trois ans.</p>
-            <div class="panel-meta">
-              <div class="meta-item"><span class="meta-label">Cadre</span><span class="meta-value">CA — session ordinaire</span></div>
-              <div class="meta-item"><span class="meta-label">Référence</span><span class="meta-value">2022-09-CA-01</span></div>
+              <div class="meta-item"><span class="meta-label">Cadre</span><span class="meta-value">Conseil d'administration</span></div>
               <div class="meta-item"><span class="meta-label">Statut</span><span class="spill meta-value"><span class="dot" style="background:#EF4444"></span>Sans réponse</span></div>
             </div>
           </div></div>
         </div>
 
-        <div class="entry" data-status="sans-reponse" onclick="toggle(this)">
-          <div class="entry-trigger">
-            <span class="entry-date">3 mars</span>
-            <span class="entry-badge badge-petition">Pétition</span>
-            <span class="entry-title">Pétition pour la révision du plan de surveillance</span>
-            <span class="e-dot s-sr"></span>
-            <span class="chevron"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
-          </div>
-          <div class="entry-panel"><div class="panel-inner">
-            <p class="panel-body">Signée par 18 membres de l'équipe éducative et pédagogique. Transmise à la direction le 3 mars. Sans réponse.</p>
-            <div class="panel-meta">
-              <div class="meta-item"><span class="meta-label">Signataires</span><span class="meta-value">18 membres</span></div>
-              <div class="meta-item"><span class="meta-label">Référence</span><span class="meta-value">2022-03-PET-01</span></div>
-              <div class="meta-item"><span class="meta-label">Statut</span><span class="spill meta-value"><span class="dot" style="background:#EF4444"></span>Sans réponse</span></div>
-            </div>
-          </div></div>
-        </div>
-      </div>
-
-      <div class="year-block" data-year="2020">
-        <div class="year-marker"><span class="year-text">2020</span></div>
-
-        <div class="entry" data-status="traite" onclick="toggle(this)">
-          <div class="entry-trigger">
-            <span class="entry-date">6 oct.</span>
-            <span class="entry-badge badge-courrier">Courrier</span>
-            <span class="entry-title">Première demande de renfort — rentrée 2020</span>
-            <span class="e-dot s-tr"></span>
-            <span class="chevron"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></span>
-          </div>
-          <div class="entry-panel"><div class="panel-inner">
-            <p class="panel-body">Un poste d'AED à mi-temps accordé pour un trimestre uniquement, puis non renouvelé malgré la poursuite de la hausse des effectifs.</p>
-            <div class="panel-meta">
-              <div class="meta-item"><span class="meta-label">Signataire</span><span class="meta-value">Mme Aubert, CPE</span></div>
-              <div class="meta-item"><span class="meta-label">Référence</span><span class="meta-value">2020-10-CPE-01</span></div>
-              <div class="meta-item"><span class="meta-label">Statut</span><span class="spill meta-value"><span class="dot" style="background:#22C55E"></span>Traité (partiel)</span></div>
-            </div>
-          </div></div>
-        </div>
       </div>
 
     </div><!-- /timeline -->
@@ -904,6 +960,13 @@
 
 </div><!-- /wrap -->
 
+<footer class="site-footer">
+  <p class="footer-visitors">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="opacity:0.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+    <span id="visitor-count">—</span> visiteurs uniques
+  </p>
+</footer>
+
 <script>
   function syncToggleUI(isLight) {
     var icon = document.getElementById('toggle-icon');
@@ -921,8 +984,10 @@
   // Restore saved preference
   (function() {
     try {
-      if (localStorage.getItem('theme') === 'light') {
-        document.documentElement.classList.add('light');
+      if (localStorage.getItem('theme') === 'dark') {
+        document.documentElement.classList.remove('light');
+        document.addEventListener('DOMContentLoaded', function() { syncToggleUI(false); });
+      } else {
         document.addEventListener('DOMContentLoaded', function() { syncToggleUI(true); });
       }
     } catch(e){}
@@ -982,6 +1047,34 @@
     count++;
     document.getElementById('sc').innerHTML = '<strong>' + count + ' personnes</strong> ont déjà signé';
   }
+
+  // COMPTEUR VISITEURS UNIQUES (CounterAPI)
+  (function() {
+    const NAMESPACE = 'cousteau-sous-leau';
+    const KEY = 'visiteurs';
+    const storageKey = 'csl_visited';
+
+    function displayCount(n) {
+      var el = document.getElementById('visitor-count');
+      if (el) el.textContent = Number(n).toLocaleString('fr-FR');
+    }
+
+    // On ne compte qu'une fois par session navigateur
+    var alreadyVisited = false;
+    try { alreadyVisited = !!sessionStorage.getItem(storageKey); } catch(e){}
+
+    var endpoint = alreadyVisited
+      ? 'https://api.counterapi.dev/v1/' + NAMESPACE + '/' + KEY + '/get'
+      : 'https://api.counterapi.dev/v1/' + NAMESPACE + '/' + KEY + '/up';
+
+    fetch(endpoint)
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        displayCount(data.count || data.value || '—');
+        try { sessionStorage.setItem(storageKey, '1'); } catch(e){}
+      })
+      .catch(function() { displayCount('—'); });
+  })();
 
   window.addEventListener('scroll', updateTimelineProgress, { passive: true });
   window.addEventListener('load', updateTimelineProgress);
