@@ -1110,6 +1110,8 @@
       current.classList.remove('active');
       current.style.cssText = '';
 
+      window.scrollTo({ top: 0, behavior: 'instant' });
+
       next.style.display = 'block';
       next.style.opacity = '0';
       next.style.transform = 'translateY(14px)';
